@@ -6,27 +6,29 @@ export default function Home() {
   const [image, setImage] = useState({ file: undefined, url: "" });
   const [predictions, setPredictions] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!image) return;
-
+  const detectObjects = (image) => {
     const formData = new FormData();
     formData.append("model", "yolov4");
     formData.append("image", image.file);
-    fetch("/api/detection", {
+    return fetch("/api/detection", {
       method: "POST",
       body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => setPredictions(data.predictions));
+    }).then((res) => res.json());
   };
 
   return (
     <div className="layout">
+      <h1 style={{ margin: "0 2rem" }}>Image Detection</h1>
       <div className="header">
-        <ImageInput onInput={(image) => setImage(image)}></ImageInput>
-        <h1>Image Detection</h1>
-        <button onClick={handleSubmit}>Detect Objects</button>
+        <ImageInput
+          onInput={(image) => {
+            setImage(image);
+            setPredictions([]);
+            detectObjects(image).then((data) =>
+              setPredictions(data.predictions)
+            );
+          }}
+        ></ImageInput>
       </div>
       <div
         style={{

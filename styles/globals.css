@@ -10,6 +10,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  text-align: center;
 }
 
 a {
@@ -29,7 +30,8 @@ a {
 
 .image-input {
   border: 2px dashed var(--text-color);
-  padding: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 .detection-canvas {
@@ -61,5 +63,6 @@ button:hover {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  margin: 2rem 0;
 }
