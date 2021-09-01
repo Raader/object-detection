@@ -4,6 +4,25 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
   const canvas = useRef();
   const padding = 25;
 
+  const drawLabeledRectangle = (ctx, { x, y, width, height, text }) => {
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = ctx.canvas.width / 80;
+    ctx.strokeRect(x, y, width, height);
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = ctx.canvas.width / 200;
+    ctx.strokeRect(x, y, width, height);
+
+    ctx.font = `${ctx.canvas.width / 20}px arial`;
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = ctx.canvas.width / 100;
+    ctx.strokeText(text, x, y - ctx.canvas.width / 40);
+
+    ctx.fillStyle = "white";
+    ctx.fillText(text, x, y - ctx.canvas.width / 40);
+  };
+
   useEffect(() => {
     if (!image) return;
 
@@ -22,40 +41,13 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
       ctx.drawImage(imageElement, 0, 0);
 
       predictions?.forEach((prediction) => {
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = ctx.canvas.width / 80;
-        ctx.strokeRect(
-          prediction.bbox.x1,
-          prediction.bbox.y1,
-          prediction.bbox.x2 - prediction.bbox.x1,
-          prediction.bbox.y2 - prediction.bbox.y1
-        );
-
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = ctx.canvas.width / 200;
-        ctx.strokeRect(
-          prediction.bbox.x1,
-          prediction.bbox.y1,
-          prediction.bbox.x2 - prediction.bbox.x1,
-          prediction.bbox.y2 - prediction.bbox.y1
-        );
-
-        ctx.font = `${ctx.canvas.width / 20}px arial`;
-
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = ctx.canvas.width / 100;
-        ctx.strokeText(
-          prediction.label,
-          prediction.bbox.x1,
-          prediction.bbox.y1 - ctx.canvas.width / 40
-        );
-
-        ctx.fillStyle = "white";
-        ctx.fillText(
-          prediction.label,
-          prediction.bbox.x1,
-          prediction.bbox.y1 - ctx.canvas.width / 40
-        );
+        drawLabeledRectangle(ctx, {
+          x: prediction.bbox.x1,
+          y: prediction.bbox.y1,
+          width: prediction.bbox.x2 - prediction.bbox.x1,
+          height: prediction.bbox.y2 - prediction.bbox.y1,
+          text: prediction.label,
+        });
       });
     };
 
