@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 const ImageCanvas = ({ image, predictions = [], ...props }) => {
   const canvas = useRef();
-  const padding = 25;
+  const paddingFactor = 15;
 
   const drawLabeledRectangle = (ctx, { x, y, width, height, text }) => {
     ctx.strokeStyle = "black";
@@ -34,16 +34,17 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
     imageElement.src = image;
 
     const onLoad = () => {
-      ctx.canvas.width = imageElement.width;
-      ctx.canvas.height = imageElement.height;
+      const padding = imageElement.width / paddingFactor;
+      ctx.canvas.width = imageElement.width + padding * 2;
+      ctx.canvas.height = imageElement.height + padding * 2;
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-      ctx.drawImage(imageElement, 0, 0);
+      ctx.drawImage(imageElement, padding, padding);
 
       predictions?.forEach((prediction) => {
         drawLabeledRectangle(ctx, {
-          x: prediction.bbox.x1,
-          y: prediction.bbox.y1,
+          x: prediction.bbox.x1 + padding,
+          y: prediction.bbox.y1 + padding,
           width: prediction.bbox.x2 - prediction.bbox.x1,
           height: prediction.bbox.y2 - prediction.bbox.y1,
           text: prediction.label,
