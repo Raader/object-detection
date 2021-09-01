@@ -38,13 +38,14 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
       ctx.canvas.width = imageElement.width + padding * 2;
       ctx.canvas.height = imageElement.height + padding * 2;
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.translate(padding, padding);
 
-      ctx.drawImage(imageElement, padding, padding);
+      ctx.drawImage(imageElement, 0, 0);
 
       predictions?.forEach((prediction) => {
         drawLabeledRectangle(ctx, {
-          x: prediction.bbox.x1 + padding,
-          y: prediction.bbox.y1 + padding,
+          x: prediction.bbox.x1,
+          y: prediction.bbox.y1,
           width: prediction.bbox.x2 - prediction.bbox.x1,
           height: prediction.bbox.y2 - prediction.bbox.y1,
           text: prediction.label,
