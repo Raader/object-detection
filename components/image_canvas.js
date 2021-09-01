@@ -22,8 +22,18 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
       ctx.drawImage(imageElement, 0, 0);
 
       predictions?.forEach((prediction) => {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-        ctx.fillRect(
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = ctx.canvas.width / 80;
+        ctx.strokeRect(
+          prediction.bbox.x1,
+          prediction.bbox.y1,
+          prediction.bbox.x2 - prediction.bbox.x1,
+          prediction.bbox.y2 - prediction.bbox.y1
+        );
+
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = ctx.canvas.width / 200;
+        ctx.strokeRect(
           prediction.bbox.x1,
           prediction.bbox.y1,
           prediction.bbox.x2 - prediction.bbox.x1,
@@ -32,19 +42,19 @@ const ImageCanvas = ({ image, predictions = [], ...props }) => {
 
         ctx.font = `${ctx.canvas.width / 20}px arial`;
 
-        ctx.strokeStyle = "bw";
+        ctx.strokeStyle = "black";
         ctx.lineWidth = ctx.canvas.width / 100;
         ctx.strokeText(
           prediction.label,
           prediction.bbox.x1,
-          prediction.bbox.y1 - 25
+          prediction.bbox.y1 - ctx.canvas.width / 40
         );
 
         ctx.fillStyle = "white";
         ctx.fillText(
           prediction.label,
           prediction.bbox.x1,
-          prediction.bbox.y1 - 25
+          prediction.bbox.y1 - ctx.canvas.width / 40
         );
       });
     };
