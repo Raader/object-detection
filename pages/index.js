@@ -18,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <div className="layout">
+    <>
       <div style={{ height: "100vh" }}>
         <h1>Object Detection</h1>
         <div className="header">
@@ -68,6 +68,6 @@ export default function Home() {
       <footer>
         Made By <a href="https://www.raader.me">Raader</a>
       </footer>
-    </div>
+    </>
   );
 }

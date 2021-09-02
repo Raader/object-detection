@@ -60,10 +60,6 @@ button:hover {
   color: var(--bg-color);
 }
 
-.layout {
-  padding: 1rem;
-}
-
 .header {
   display: flex;
   align-items: center;
