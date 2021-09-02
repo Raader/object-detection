@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div className="layout">
       <div style={{ height: "100vh" }}>
-        <h1>Image Detection</h1>
+        <h1>Object Detection</h1>
         <div className="header">
           <ImageInput
             onInput={(image) => {
