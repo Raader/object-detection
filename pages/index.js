@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div style={{ height: "100vh", width: "100%", padding: "1rem" }}>
         <h1>Object Detection</h1>
         <div className="header">
           <ImageInput
